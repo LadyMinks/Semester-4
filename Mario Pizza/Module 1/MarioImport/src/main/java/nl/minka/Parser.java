@@ -26,6 +26,7 @@ class Parser {
                 lineNumber++;
                 processLine(line);
             }
+            processLine("");
         } catch (Exception e) {
             final String message = "We failed to read file " + filename + ". Errors at line " + lineNumber;
             throw new RuntimeException(message, e);
@@ -35,15 +36,17 @@ class Parser {
 
     private void processLine(String line) {
         if (!line.isEmpty()) {
-            branchBlock.add(line);
-        } else {
+            if (!line.startsWith("--")) {
+                branchBlock.add(line);
+            }
+        } else if (!branchBlock.isEmpty()) {
             processBlock(branchBlock);
             branchBlock.clear();
         }
     }
 
-    private void processBlock(List<String> branchBlock){
-        if (branchBlock.size() != 7){
+    private void processBlock(List<String> branchBlock) {
+        if (branchBlock.size() == 7) {
             System.out.println(branchBlock);
         }
     }
