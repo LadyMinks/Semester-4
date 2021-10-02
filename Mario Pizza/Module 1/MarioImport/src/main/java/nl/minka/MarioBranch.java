@@ -7,18 +7,16 @@ public class MarioBranch {
 
     private final String branchName;
     private final String streetName;
-    private final int streetNumber;
-    private final String streetNumberSuffix;
+    private final StreetNumberRange range;
     private final String city;
     private final String country;
     private final String postalCode;
     private final String phoneNumber;
 
-    public MarioBranch(String branchName, String streetName, int streetNumber, String streetNumberSuffix, String city, String country, String postalCode, String phoneNumber) {
+    public MarioBranch(String branchName, String streetName, StreetNumberRange range, String city, String country, String postalCode, String phoneNumber) {
         this.branchName = branchName;
         this.streetName = streetName;
-        this.streetNumber = streetNumber;
-        this.streetNumberSuffix = streetNumberSuffix;
+        this.range = range;
         this.city = city;
         this.country = country;
         this.postalCode = postalCode;
@@ -33,12 +31,8 @@ public class MarioBranch {
         return streetName;
     }
 
-    public int getStreetNumber() {
-        return streetNumber;
-    }
-
-    public String getStreetNumberSuffix() {
-        return streetNumberSuffix;
+    public StreetNumberRange getRange() {
+        return range;
     }
 
     public String getCity() {
@@ -55,5 +49,18 @@ public class MarioBranch {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "MarioBranch{" +
+                "branchName='" + branchName + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", range=" + range +
+                ", city='" + city + '\'' +
+                ", country='" + country + '\'' +
+                ", postalCode='" + postalCode + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                '}';
     }
 }

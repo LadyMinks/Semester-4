@@ -11,8 +11,10 @@ import java.util.List;
  */
 class Parser {
 
+    private final Processor processor = new Processor();
     private final List<String> stringList = new ArrayList<>();
-    final List<String> branchBlock = new ArrayList<>();
+    private final List<String> branchBlock = new ArrayList<>();
+//    private final MarioBranch mb = new MarioBranch();
 
     public List<String> readFile(String filename) {
 
@@ -24,7 +26,7 @@ class Parser {
             String line;
             while ((line = br.readLine()) != null) {
                 lineNumber++;
-                processLine(line);
+                processLine(line.trim());
             }
             processLine("");
         } catch (Exception e) {
@@ -34,20 +36,16 @@ class Parser {
         return stringList;
     }
 
-    private void processLine(String line) {
+    private void processLine(String line) throws Exception {
         if (!line.isEmpty()) {
             if (!line.startsWith("--")) {
                 branchBlock.add(line);
             }
         } else if (!branchBlock.isEmpty()) {
-            processBlock(branchBlock);
+            processor.processBlock(branchBlock);
             branchBlock.clear();
         }
     }
 
-    private void processBlock(List<String> branchBlock) {
-        if (branchBlock.size() == 7) {
-            System.out.println(branchBlock);
-        }
-    }
+
 }
