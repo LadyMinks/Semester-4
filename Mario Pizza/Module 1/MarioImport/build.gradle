@@ -7,7 +7,7 @@ group 'nl.nl.minka'
 version '1.0-SNAPSHOT'
 
 application {
-    mainClassName = 'nl.minka.SqlDatabaseConnection'
+    mainClassName = 'nl.minka.Main'
 }
 
 repositories {

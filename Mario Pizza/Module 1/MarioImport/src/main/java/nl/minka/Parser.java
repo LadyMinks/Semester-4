@@ -14,7 +14,6 @@ class Parser {
     private final Processor processor = new Processor();
     private final List<String> stringList = new ArrayList<>();
     private final List<String> branchBlock = new ArrayList<>();
-//    private final MarioBranch mb = new MarioBranch();
 
     public List<String> readFile(String filename) {
 
@@ -46,6 +45,4 @@ class Parser {
             branchBlock.clear();
         }
     }
-
-
 }

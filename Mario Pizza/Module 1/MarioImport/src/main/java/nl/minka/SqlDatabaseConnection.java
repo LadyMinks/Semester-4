@@ -10,7 +10,7 @@ public class SqlDatabaseConnection {
 
     // Connect to your database.
     // Replace server name, username, and password with your credentials
-    public static void main(String[] args) {
+    public void connect() {
         String connectionUrl =
                 "jdbc:sqlserver://localhost;"
                         + "database=dominospizzas;"
@@ -23,18 +23,19 @@ public class SqlDatabaseConnection {
         ResultSet resultSet = null;
 
         try (Connection connection = DriverManager.getConnection(connectionUrl);) {
-            // Code here.
-            Statement statement = connection.createStatement();{
-                String selectSql = "SELECT Id, Name, address_id FROM branch";
-                resultSet = statement.executeQuery(selectSql);
-            }
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM City WHERE Id = ? ");
+            preparedStatement.setInt(1, 1);
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                System.out.println(resultSet.getString(2) + " " + resultSet.getString(3));
+                System.out.println(resultSet.getString(2));
             }
-        }
-        // Handle any errors that may have occurred.
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void insertBranchName(Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO Branch (Name) VALUES ? ");
+        preparedStatement.setString(1, );
     }
 }
