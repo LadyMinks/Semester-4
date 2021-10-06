@@ -18,8 +18,12 @@ public class Processor {
             String street = branchBlock.get(1);
             StreetNumberRange range = processStreetRange(branchBlock.get(2));
             String city = processCity(branchBlock.get(3));
-            final MarioBranch mb = new MarioBranch(branchName, street, range, city, branchBlock.get(4), branchBlock.get(5), branchBlock.get(6));
-            System.out.println(mb.toString());
+            String country = processCountry(branchBlock.get(4));
+            String postalCode = processPostalCode(branchBlock.get(5));
+            String phoneNumber = processPhoneNumber(branchBlock.get(6));
+            final MarioBranch mb = new MarioBranch(branchName, street, range, city, country, postalCode, phoneNumber);
+            final Printer printer = new Printer(mb);
+            printer.printBlock(mb);
         } else throw new Exception("Branch incomplete");
     }
 
@@ -36,7 +40,7 @@ public class Processor {
         if (line.matches(".*[0-9].*")) {
             final String trimmedLine = line.replace(" ", "");
             int number = Integer.parseInt(trimmedLine.replaceAll("[^0-9]", ""));
-            String suffix = trimmedLine.replaceAll("[^A-Za-z]", "");
+            String suffix = trimmedLine.replaceAll("[^A-Za-z]", "").toLowerCase();
             return new StreetNumber(number, suffix);
         } else throw new Exception("Must contain a Street Number");
     }
@@ -59,17 +63,41 @@ public class Processor {
         String[] cityAr = line.split("\s");
         int cityArSize = cityAr.length;
         String[] newCityAr = new String[cityAr.length];
-        String city;
-        StringBuilder sb = new StringBuilder();
-        if(cityArSize > 1){
+        if (cityArSize > 1) {
             for (int i = 0; i < cityAr.length; i++) {
                 String subCityString = cityAr[i];
                 String subCity = subCityString.substring(0, 1).toUpperCase() + subCityString.substring(1).toLowerCase();
-
+                newCityAr[i] = subCity;
             }
             return Arrays.toString(newCityAr);
         } else {
-            return line.substring(0,1).toUpperCase() + line.substring(1).toLowerCase();
+            return line.substring(0, 1).toUpperCase() + line.substring(1).toLowerCase();
         }
+    }
+
+    private String processCountry(String line) throws Exception {
+        if (line.length() == 2) {
+            return line;
+        } else {
+            throw new Exception("please enter a valid country abbreviation");
+        }
+    }
+
+    private String processPostalCode(String line) throws Exception {
+        String newLine = line.trim().replaceAll(" ", "");
+        String numberSubString = newLine.replaceAll("[^0-9]", "").trim();
+        String letterSubString = newLine.replaceAll("[^A-Za-z]", "").toUpperCase().trim();
+
+        if (numberSubString.length() != 4) {
+            throw new Exception("PostalCode must contain 4 numbers");
+        }
+        if (letterSubString.length() != 2) {
+            throw new Exception("PostalCode must contain 2 letters");
+        }
+        return numberSubString + letterSubString;
+    }
+
+    private String processPhoneNumber(String line) {
+        return line.replaceAll("-", "").replaceAll("[^0-9]", "").trim();
     }
 }
