@@ -23,9 +23,11 @@ public class StreetNumberRange {
 
     @Override
     public String toString() {
-        return "StreetNumberRange{" +
-                "firstNumber=" + firstNumber +
-                ", secondNumber=" + secondNumber +
-                '}';
+
+        if (firstNumber.getNumber() == secondNumber.getNumber()){
+            return String.valueOf(firstNumber);
+        } else {
+            return firstNumber + "-" + secondNumber;
+        }
     }
 }

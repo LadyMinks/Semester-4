@@ -1,6 +1,5 @@
 package nl.minka;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,6 +8,7 @@ import java.util.Set;
  * @author Minka Firth
  */
 public class Processor {
+    SqlDatabaseConnection connection = new SqlDatabaseConnection();
 
     final Set<String> branchNames = new HashSet<>();
 
@@ -23,7 +23,8 @@ public class Processor {
             String phoneNumber = processPhoneNumber(branchBlock.get(6));
             final MarioBranch mb = new MarioBranch(branchName, street, range, city, country, postalCode, phoneNumber);
             final Printer printer = new Printer(mb);
-            printer.printBlock(mb);
+            connection.connect(mb);
+//            printer.printBlock(mb);
         } else throw new Exception("Branch incomplete");
     }
 
@@ -63,13 +64,15 @@ public class Processor {
         String[] cityAr = line.split("\s");
         int cityArSize = cityAr.length;
         String[] newCityAr = new String[cityAr.length];
+        String newString = "";
         if (cityArSize > 1) {
             for (int i = 0; i < cityAr.length; i++) {
                 String subCityString = cityAr[i];
                 String subCity = subCityString.substring(0, 1).toUpperCase() + subCityString.substring(1).toLowerCase();
                 newCityAr[i] = subCity;
+                newString = newString + " " + subCity + " ";
             }
-            return Arrays.toString(newCityAr);
+            return newString.trim();
         } else {
             return line.substring(0, 1).toUpperCase() + line.substring(1).toLowerCase();
         }

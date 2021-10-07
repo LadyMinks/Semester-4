@@ -11,8 +11,8 @@ public class Main {
         Parser parser = new Parser();
         parser.readFile("Winkels Mario.txt");
 
-        SqlDatabaseConnection sqlDatabaseConnection = new SqlDatabaseConnection();
-        sqlDatabaseConnection.connect();
+//        SqlDatabaseConnection sqlDatabaseConnection = new SqlDatabaseConnection();
+//        sqlDatabaseConnection.connect();
     }
 
 }

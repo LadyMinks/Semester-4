@@ -1,18 +1,18 @@
+nl/minka/StreetNumber.java
+ nl.minka.StreetNumber
+nl/minka/Main.java
+ nl.minka.Main
+nl/minka/MarioBranch.java
+ nl.minka.MarioBranch
 nl/minka/Printer.java
  nl.minka.Printer
 nl/minka/Importer.java
  nl.minka.Importer
-nl/minka/Parser.java
- nl.minka.Parser
-nl/minka/StreetNumber.java
- nl.minka.StreetNumber
 nl/minka/StreetNumberRange.java
  nl.minka.StreetNumberRange
-nl/minka/Processor.java
- nl.minka.Processor
-nl/minka/MarioBranch.java
- nl.minka.MarioBranch
-nl/minka/Main.java
- nl.minka.Main
 nl/minka/SqlDatabaseConnection.java
  nl.minka.SqlDatabaseConnection
+nl/minka/Parser.java
+ nl.minka.Parser
+nl/minka/Processor.java
+ nl.minka.Processor

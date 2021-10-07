@@ -23,9 +23,11 @@ public class StreetNumber {
 
     @Override
     public String toString() {
-        return "StreetNumber{" +
-                "number=" + number +
-                ", suffix='" + suffix + '\'' +
-                '}';
+
+        if (suffix.isBlank()){
+            return String.valueOf(number);
+        } else {
+            return number + suffix;
+        }
     }
 }
