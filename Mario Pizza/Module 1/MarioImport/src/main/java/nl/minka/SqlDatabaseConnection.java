@@ -25,19 +25,15 @@ public class SqlDatabaseConnection {
         ResultSet resultSet = null;
 
         try (Connection connection = DriverManager.getConnection(connectionUrl)) {
-//            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM City WHERE Id = ? ");
-            int addressId = insertBranchAddress(connection, resultSet, mb);
+            int addressId = updateBranchAddress(connection, mb);
             insertBranch(connection, mb, addressId);
-//
-//            while (resultSet.next()) {
-//                System.out.println(resultSet.getString(1));
-//            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public int insertBranchAddress(Connection connection, ResultSet resultSet, MarioBranch mb) throws SQLException {
+    public int insertBranchAddress(Connection connection, MarioBranch mb) throws SQLException {
         ResultSet rs = selectAddress(connection, mb);
         boolean alreadyExists = rs.next();
         if (alreadyExists) {
@@ -51,21 +47,6 @@ public class SqlDatabaseConnection {
         psInsert.execute();
         ResultSet generatedKeys = psInsert.getGeneratedKeys();
         return generatedKeys.getInt(1);
-    }
-
-    public void printResultSet(ResultSet resultSet) {
-        try {
-            final int columnCount = resultSet.getMetaData().getColumnCount();
-            while (resultSet.next()) {
-                for (int i = 1; i <= columnCount; ++i) {
-                    final Object value = resultSet.getObject(i);
-                    System.out.println(value);
-                }
-                System.out.println();
-            }
-        } catch (SQLException throwables) {
-            Logger.getLogger("SQLDatabaseConnection").log(Level.WARNING, "sad", throwables);
-        }
     }
 
     public ResultSet selectAddress(Connection connection, MarioBranch mb) throws SQLException {
@@ -99,5 +80,63 @@ public class SqlDatabaseConnection {
         printResultSet(rs);
         rs.beforeFirst();
         return rs;
+    }
+
+    public void printResultSet(ResultSet resultSet) {
+        try {
+            final int columnCount = resultSet.getMetaData().getColumnCount();
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnCount; ++i) {
+                    final Object value = resultSet.getObject(i);
+                    System.out.println(value);
+                }
+                System.out.println();
+            }
+        } catch (SQLException throwables) {
+            Logger.getLogger("SQLDatabaseConnection").log(Level.WARNING, "sad", throwables);
+        }
+    }
+
+    public void updateAddress(Connection connection, String columnName, String value, int id) throws SQLException {
+        PreparedStatement psUpdate = connection.prepareStatement("UPDATE Address SET " + columnName + " = ? WHERE Id =  ? ");
+        psUpdate.setString(1, value);
+        psUpdate.setInt(2, id);
+
+        psUpdate.executeUpdate();
+    }
+
+    public int updateBranchAddress(Connection connection, MarioBranch mb) throws SQLException {
+        PreparedStatement psSelect = connection.prepareStatement("SELECT * FROM Address WHERE (Address = ? AND PostalCode = ?) OR (Address = ? AND City = ?) OR (PostalCode = ? AND City = ?)");
+        String address = mb.getStreetName() + " " + mb.getRange();
+        String postalCode = mb.getPostalCode();
+        String city = mb.getCity();
+        psSelect.setString(1, address);
+        psSelect.setString(2, postalCode);
+        psSelect.setString(3, address);
+        psSelect.setString(4, city);
+        psSelect.setString(5, postalCode);
+        psSelect.setString(6, city);
+
+        ResultSet rs = psSelect.executeQuery();
+
+        if (!rs.next()) {
+            return insertBranchAddress(connection, mb);
+        }
+
+        if (!rs.getString("Address").equals(address)) {
+            updateAddress(connection, "Address", address, rs.getInt("Id"));
+            System.out.println("Updated Table Address. Column updated: Address. Row: " + rs.getInt("Id"));
+            return rs.getInt("Id");
+        } else if (!rs.getString("PostalCode").equals(postalCode)) {
+            updateAddress(connection, "PostalCode", postalCode, rs.getInt("Id"));
+            System.out.println("Updated Table Address. Column updated: PostalCode. Row: " + rs.getInt("Id"));
+            return rs.getInt("Id");
+        } else if (!rs.getString("City").equals(city)) {
+            updateAddress(connection, "City", city, rs.getInt("Id"));
+            System.out.println("Updated Table Address. Column updated: City. Row: " + rs.getInt("Id"));
+            return rs.getInt("Id");
+        } else {
+            return rs.getInt("Id");
+        }
     }
 }
