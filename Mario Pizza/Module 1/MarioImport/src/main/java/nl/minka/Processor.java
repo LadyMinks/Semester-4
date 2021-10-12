@@ -22,9 +22,7 @@ public class Processor {
             String postalCode = processPostalCode(branchBlock.get(5));
             String phoneNumber = processPhoneNumber(branchBlock.get(6));
             final MarioBranch mb = new MarioBranch(branchName, street, range, city, country, postalCode, phoneNumber);
-            final Printer printer = new Printer(mb);
             connection.connect(mb);
-//            printer.printBlock(mb);
         } else throw new Exception("Branch incomplete");
     }
 
