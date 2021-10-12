@@ -26,7 +26,7 @@ public class SqlDatabaseConnection {
 
         try (Connection connection = DriverManager.getConnection(connectionUrl)) {
             int addressId = updateBranchAddress(connection, mb);
-            insertBranch(connection, mb, addressId);
+            updateBranch(connection, mb, addressId);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,21 +82,6 @@ public class SqlDatabaseConnection {
         return rs;
     }
 
-    public void printResultSet(ResultSet resultSet) {
-        try {
-            final int columnCount = resultSet.getMetaData().getColumnCount();
-            while (resultSet.next()) {
-                for (int i = 1; i <= columnCount; ++i) {
-                    final Object value = resultSet.getObject(i);
-                    System.out.println(value);
-                }
-                System.out.println();
-            }
-        } catch (SQLException throwables) {
-            Logger.getLogger("SQLDatabaseConnection").log(Level.WARNING, "sad", throwables);
-        }
-    }
-
     public void updateAddress(Connection connection, String columnName, String value, int id) throws SQLException {
         PreparedStatement psUpdate = connection.prepareStatement("UPDATE Address SET " + columnName + " = ? WHERE Id =  ? ");
         psUpdate.setString(1, value);
@@ -139,4 +124,48 @@ public class SqlDatabaseConnection {
             return rs.getInt("Id");
         }
     }
+
+    public void updateBranchName(Connection connection, String value, int addressId) throws SQLException {
+        PreparedStatement psUpdate = connection.prepareStatement("UPDATE Branch SET Name = ? WHERE AddressId =  ? ");
+        psUpdate.setString(1, value);
+        psUpdate.setInt(2, addressId);
+
+        psUpdate.executeUpdate();
+    }
+
+    public void updateBranch(Connection connection, MarioBranch mb, int addressId) throws SQLException {
+        PreparedStatement psSelect = connection.prepareStatement("SELECT * FROM Branch WHERE AddressId = ?");
+        psSelect.setInt(1, addressId);
+        ResultSet rs = psSelect.executeQuery();
+
+        if (!rs.next()) {
+            insertBranch(connection, mb, addressId);
+        }
+
+        if (rs.getRow() == 0){
+            return;
+        }
+
+        if (!rs.getString("Name").equals(mb.getBranchName())){
+            updateBranchName(connection, mb.getBranchName(), addressId);
+            System.out.println("Updated Table Branch. Column updated: BranchName. Id: " + rs.getInt("Id"));
+        }
+
+    }
+
+    public void printResultSet(ResultSet resultSet) {
+        try {
+            final int columnCount = resultSet.getMetaData().getColumnCount();
+            while (resultSet.next()) {
+                for (int i = 1; i <= columnCount; ++i) {
+                    final Object value = resultSet.getObject(i);
+                    System.out.println(value);
+                }
+                System.out.println();
+            }
+        } catch (SQLException throwables) {
+            Logger.getLogger("SQLDatabaseConnection").log(Level.WARNING, "sad", throwables);
+        }
+    }
+
 }
