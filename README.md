@@ -1,6 +1,6 @@
 # Beargumentatie Relationele Database Mario Pizza
 
-### Relational database:
+### Relational database
 
 We decided to go for a relational database. This makes it a lot easier to understand the relationships among all the
 available data and enables us to retrieve data in one or more tables with just one single query. But the main reason we
@@ -12,18 +12,19 @@ there are no duplicate records anywhere.
 ### MSSQL
 We decided to use a MSSQl server. There was some discussion about maybe using MySQL. But I decided to do some research. There are a lot of similarities between the two. For example, Both MySql and MsSql have extensive performance and scaling capabilities. However after some testing involving high volumes of SELECT, INSERT, UPDATE and DELETE queries, it seems that SQL server consistently beat MySQL. 
 
-I personally preferred the SQL server tool bench, SSMS, compared to the MySQL Workbench, mostly because it seems more secure.  The features the SSMS are also more beginner-friendly, while also applicable for experienced Data Base Engineers. Being compatible not only with Windows, but recently also with Linux and docker Platforms, makes it a more    
+I personally preferred the SQL server tool bench, SSMS, compared to the MySQL Workbench, mostly because it seems more secure.  The features the SSMS are also more beginner-friendly, while also applicable for experienced Data Base Engineers. Being compatible not only with Windows, but recently also with Linux and docker Platforms, makes it a more flexible.    
 
 We also knew that we would be programming in C#, so SQL Server will have a home-court advantage. Microsoft wrote the ADO.NET library, which facilitates access to databases and data services, specifically for SQL Server. 
 
-
 ### Approach
 
-We decided to take a code first approach, as that would play to the best of our abilities. Keeping to the ETL process of extracting, transforming and loading the data, we made a C# application. Each File that 
-That takes the data by Parsing the old files
+We wrote our database script in Datagrip. Datagrip is a very beginner-friendly tools by the makes of JetBrains, designed to query, create and manage databases. It runs on Windows, Linux and MacOS, and has a wide range of DBMS support. When the database was created, we decided for a code-first approach. While a database-first approach, using stored procedures might be more performance efficient, through modern ORMs, this is no longer really an issue. 
 
-### C#
+We also didn't want to be limited to the logic available to us through an SQL language. With a code-first approach, we have all the logic available to us in the code, and it would be a lot easier to do modifications in there as well.   
 
+#### **C#**
+
+We decided to write our application in C#. It is a mature language, so there will be a lot of documentation available online, and it has a lot of fitting features for out project. C#'s ORM (Entity Framework Core) was created by Microsoft as well as MSSQL, this would make it easier to connect the two. 
 
 
 ### Power BI
@@ -70,8 +71,6 @@ Cons
 * With the free version it's impossible to share graphs with each other. 
 
 Our Business Questions:
-
-
 
    
 ## Analysis of given Data
