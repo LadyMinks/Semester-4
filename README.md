@@ -18,7 +18,7 @@ We also knew that we would be programming in C#, so SQL Server will have a home-
 
 ### Approach
 
-We started by looking at what shape the database should take. We did this mostly by looking at Dominos pizza for inspiration. Based on [this] we made a ERD model. After a few versions, we decided on [this](https://github.com/wickex/sem4-portfolio/blob/main/1-Dominos/erd-3.png) model. We also looked at the given data, and started figuring out how this data would fit into the new model we made. 
+We started by looking at what shape the database should take. We did this mostly by looking at Dominos Pizza for inspiration. Based on [this](https://github.com/LadyMinks/Semester-4/tree/master/Mario%20Pizza) we made an ERD model. After a few versions, we decided on [this](https://github.com/wickex/sem4-portfolio/blob/main/1-Dominos/erd-3.png) model. We also looked at the given data, and started figuring out how this data would fit into the new model we made. 
 
 We wrote our database script in Datagrip. Datagrip is a very beginner-friendly tools by the makes of JetBrains, designed to query, create and manage databases. It runs on Windows, Linux and MacOS, and has a wide range of DBMS support. When the database was created, we decided for a code-first approach. While a database-first approach, using stored procedures might be more performance efficient, through modern ORMs, this is no longer really an issue. 
 

@@ -1,13 +1,3 @@
-
-## Analysis of given Data
-
-### Things that stood out
-
-* No File for Customers or addresses -> All just part of the order Files.
-* Each Product had a boolean if it was either spicy or vegetarian.
-* The file with the branches was just a text file with all the addresses of the branches.
-* Different kinds of ingredients can just be imported into the new database.
-
 ## Analysis of Dominos
 
 Different types of foods/dishes:
@@ -41,6 +31,17 @@ Different types of foods/dishes:
 
   We ran into a problem when we tried to just imagine a Customer with one Address, but Since A customer should be able
   to order deliveries to different addresses, we tried to look at it this way:
+
+
+## Analysis of given Data
+
+### Things that stood out
+
+* No File for Customers or addresses -> All just part of the order Files.
+* Each Product had a boolean if it was either spicy or vegetarian.
+* The file with the branches was just a text file with all the addresses of the branches.
+* Different kinds of ingredients can just be imported into the new database.
+
 
 ## Normalisation
 
