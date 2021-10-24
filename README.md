@@ -12,11 +12,13 @@ there are no duplicate records anywhere.
 ### MSSQL
 We decided to use a MSSQl server. There was some discussion about maybe using MySQL. But I decided to do some research. There are a lot of similarities between the two. For example, Both MySql and MsSql have extensive performance and scaling capabilities. However after some testing involving high volumes of SELECT, INSERT, UPDATE and DELETE queries, it seems that SQL server consistently beat MySQL. 
 
-I personally preferred the SQL server tool bench, SSMS, compared to the MySQL Workbench, mostly because it seems more secure.  The features the SSMS are also more beginner-friendly, while also applicable for experienced Data Base Engineers. Being compatible not only with Windows, but recently also with Linux and docker Platforms, makes it a more flexible.    
+I personally preferred the SQL server tool bench, SSMS, compared to the MySQL Workbench, mostly because it seems more secure.  The features the SSMS are also more beginner-friendly, while also applicable for experienced Data Base Engineers. 
 
 We also knew that we would be programming in C#, so SQL Server will have a home-court advantage. Microsoft wrote the ADO.NET library, which facilitates access to databases and data services, specifically for SQL Server. 
 
 ### Approach
+
+We started by looking at what shape the database should take. We did this mostly by looking at Dominos pizza for inspiration. Based on [this] we made a ERD model. After a few versions, we decided on [this](https://github.com/wickex/sem4-portfolio/blob/main/1-Dominos/erd-3.png) model. We also looked at the given data, and started figuring out how this data would fit into the new model we made. 
 
 We wrote our database script in Datagrip. Datagrip is a very beginner-friendly tools by the makes of JetBrains, designed to query, create and manage databases. It runs on Windows, Linux and MacOS, and has a wide range of DBMS support. When the database was created, we decided for a code-first approach. While a database-first approach, using stored procedures might be more performance efficient, through modern ORMs, this is no longer really an issue. 
 
@@ -26,6 +28,8 @@ We also didn't want to be limited to the logic available to us through an SQL la
 
 We decided to write our application in C#. It is a mature language, so there will be a lot of documentation available online, and it has a lot of fitting features for out project. C#'s ORM (Entity Framework Core) was created by Microsoft as well as MSSQL, this would make it easier to connect the two. 
 
+### Business Questions
+
 
 ### Power BI
 
@@ -34,7 +38,6 @@ For our visualisation tool we decided to use PowerBI. We were struggling to deci
 Here is a list of the pros and cons for each program.
 
 #### Looker
-
 Pros
 * simple UI
 * Unique form of visualisation
@@ -46,11 +49,10 @@ Cons
 * Costs 3000 euro
 
 #### Tableau
-
 Pros
 * Easy to use
 * There is a free version
-* Multiple connections available. 
+* Multiple connections available.
 
 Cons
 * Official version is very expensive.
@@ -58,7 +60,6 @@ Cons
 * very resource intensive.
 
 #### PowerBI
-
 Pros
 
 * Can use almost any form of data.
@@ -70,80 +71,6 @@ Pros
 Cons
 * With the free version it's impossible to share graphs with each other. 
 
-Our Business Questions:
+
 
    
-## Analysis of given Data
-
-### Things that stood out
-
-* No File for Customers or addresses -> All just part of the order Files.
-* Each Product had a boolean if it was either spicy or vegetarian.
-* The file with the branches was just a text file with all the addresses of the branches.
-* Different kinds of ingredients can just be imported into the new database.
-
-## Analyse van Dominos
-
-Different types of foods/dishes:
-
-- Crunchy Chicken
-- Side dishes
-- Deserts
-- Drinks
-- Breads
-
-  And their main dish: Pizza (or sandwiches) with various customization option available:
-  - Sizes
-  - Sauce
-  - Crust
-  - Ingredients
-
-
-- Orders
-
-  Consists of different aspects such as:
-  - Branch where ordered
-  - The Customer + phone number & email
-  - Take away or delivery, +if Delivery Address
-  - Whatever that has been ordered + product info
-  - Payment method and price
-  - Any notes for the deliverer
-  - Delivery time
-
-
-- Customers
-
-  We ran into a problem when we tried to just imagine a Customer with one Address, but Since A customer should be able
-  to order deliveries to different addresses, we tried to look at it this way:
-
-## Normalisatie
-
-Normalisation is a guideline to avoid data redundancy and avoid dataloss. If we take a look the orders work, we can
-apply some normalisation to simplify this process. An Order exists of multiple parts:
-
-1NF  
-<ins>Order ID</ins> PK  
-Branch  
-Address  
-Customer  
-Phone number  
-Email address  
-Notes  
-Order Placed At  
-Order Delivered At  
-Order line    
-Coupons
-
-2NF
-
-<ins>ID</ins> PK  
-BranchId FK  
-AddressId FK  
-CustomerId FK  
-Phone  
-Email   
-Notes  
-PlacedAt  
-DeliveredAt  
-OrderLine    
-Coupons
