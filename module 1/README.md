@@ -10,7 +10,7 @@ maintaining uniform data in all of them. Data in relational databases are also n
 there are no duplicate records anywhere.
 
 ### MSSQL
-We decided to use a MSSQl server. There was some discussion about maybe using MySQL. But I decided to do some research. There are a lot of similarities between the two. For example, Both MySql and MsSql have extensive performance and scaling capabilities. However after some testing involving high volumes of SELECT, INSERT, UPDATE and DELETE queries, it seems that SQL server consistently beat MySQL. 
+We decided to use a MSSQl server. There was some discussion about maybe using MySQL. But I decided to do some research. There are a lot of similarities between the two. For example, Both MySql and MsSql have extensive performance and scaling capabilities. 
 
 I personally preferred the SQL server tool bench, SSMS, compared to the MySQL Workbench, mostly because it seems more secure.  The features the SSMS are also more beginner-friendly, while also applicable for experienced Data Base Engineers. 
 
