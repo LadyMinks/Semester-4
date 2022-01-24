@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'nl.nl.minka'
+version '1.0-SNAPSHOT'
+
+application {
+    mainClassName = 'nl.minka.Main'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'com.microsoft.sqlserver:mssql-jdbc:9.4.0.jre16'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+}
+
+test {
+    useJUnitPlatform()
+}
